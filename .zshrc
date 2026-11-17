@@ -135,24 +135,13 @@ zstyle ':completion:*' cache-path ~/.zsh/cache
 zstyle ':fzf-tab:complete:*' fzf-preview 'bat --color=always --line-range :50 {}'
 
 # ----------------------------------------------------------------------------
-# THEME - DRACULA
-# ----------------------------------------------------------------------------
-
-# The prompt colors live in starship.toml. eza, git and syntax highlighting
-# use the terminal's own palette.
-export BAT_THEME='Dracula'
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#6272a4'
-dracula_fzf_colors='--color=fg:#f8f8f2,hl:#bd93f9,fg+:#f8f8f2,bg+:#44475a,hl+:#bd93f9,info:#ffb86c,prompt:#50fa7b,pointer:#ff79c6,marker:#ff79c6,spinner:#ffb86c,header:#6272a4'
-
-# ----------------------------------------------------------------------------
 # FZF INTEGRATION
 # ----------------------------------------------------------------------------
 
 if command -v fzf &>/dev/null; then
     export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
-    export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --preview-window=right:60% $dracula_fzf_colors"
+    export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --preview-window=right:60%'
 fi
-zstyle ':fzf-tab:*' fzf-flags $dracula_fzf_colors
 
 # ----------------------------------------------------------------------------
 # FUNCTIONS
