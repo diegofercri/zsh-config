@@ -31,6 +31,7 @@ A personal zsh configuration with a single installer. Supported systems:
 - Installs zinit on the first start if it is missing, and loads the plugins with it.
 - Starship prompt. Completion with fzf-tab.
 - Aliases for navigation, `ls` (with eza when installed) and git.
+- The theme is Dracula. The prompt gets it from the palette in `starship.toml`; `bat`, `fzf`, fzf-tab and the autosuggestions get it from the THEME section of `.zshrc`. eza, git and syntax highlighting use the terminal's own palette, so they are not themed here.
 - The editor is `nano`: macOS ships it and the installer adds it on Debian/Proxmox.
 - Functions: `fcd`, `ff`, `extract`, `update` and `cheatsheet`.
 - The `up` alias upgrades the system packages: `brew update && brew upgrade` on macOS and `apt update && apt full-upgrade` on Debian/Proxmox. It uses `full-upgrade` because Proxmox recommends it; it does not move to a new major release.
