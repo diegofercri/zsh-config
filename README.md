@@ -1,24 +1,23 @@
-# zsh-macos
+# zsh-config
 
-Configuración mínima de zsh para macOS: zinit, starship, fzf y Bitwarden como agente SSH.
-
-## Requisitos
-
-- [Homebrew](https://brew.sh)
-- Herramientas: `brew install starship eza fzf fd bat ripgrep`
-- Bitwarden de escritorio con el agente SSH activado: `brew install --cask bitwarden`
+Mi configuración de zsh para macOS y servidores Debian/Proxmox.
 
 ## Instalación
 
 ```sh
-SSH_AUTH_SOCK=~/.bitwarden-ssh-agent.sock git clone git@github.com:diegofercri/zsh-macos.git ~/Development/zsh-macos
-ln -sf ~/Development/zsh-macos/.zshrc ~/.zshrc
+curl -fsSL https://raw.githubusercontent.com/diegofercri/zsh-config/main/install.sh | bash
 ```
 
-Abre una terminal nueva. La primera vez, zinit se instala solo y descarga los plugins.
+En macOS hace falta tener [Homebrew](https://brew.sh) instalado. Si ya existe un `~/.zshrc`, se guarda como `~/.zshrc.bak-<fecha>`.
 
-## Notas
+## Fuente
 
-- No añadas Homebrew a `~/.zprofile` aunque el instalador lo diga. El `.zshrc` ya lo carga.
-- Si instalas Bitwarden desde la App Store, el socket está en otra ruta. Cambia `SSH_AUTH_SOCK` a `~/Library/Containers/com.bitwarden.desktop/Data/.bitwarden-ssh-agent.sock`.
+En macOS se instala JetBrains Mono con iconos. Hay que seleccionarla a mano en cada terminal y editor: se llama `JetBrainsMono Nerd Font`.
+
+En los servidores no se instala ninguna fuente: la que se ve por SSH es la del terminal desde el que te conectas.
+
+## Uso
+
 - `cheatsheet` muestra todos los alias y funciones.
+- Los ajustes propios de una máquina van en `~/.zshrc.local`.
+- Para actualizar, vuelve a ejecutar el comando de instalación.

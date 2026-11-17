@@ -17,8 +17,8 @@ source "${ZINIT_HOME}/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-# Homebrew integration
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# Homebrew integration (macOS)
+[[ -x /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Zinit annexes
 zinit light-mode for \
@@ -30,13 +30,13 @@ zinit light-mode for \
 # ENVIRONMENT VARIABLES
 # ----------------------------------------------------------------------------
 
-# SSH agent (Bitwarden desktop)
-export SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock"
+# macOS only: SSH agent (Bitwarden desktop) and Homebrew Ruby
+if [[ $OSTYPE == darwin* ]]; then
+    export SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock"
+    export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+fi
 
-# Ruby
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-
-# Local binaries (e.g. Claude Code)
+# Local binaries (e.g. Claude Code, fd and bat links on Debian)
 export PATH="$HOME/.local/bin:$PATH"
 
 # Default applications
@@ -155,6 +155,32 @@ ff() {
     fi
 }
 
+# Universal file extractor
+extract() {
+    [[ -n $1 && -f $1 ]] || {
+        print -u2 -- "extract: '$1' is not a valid file"
+        return 1
+    }
+
+    local archive=$1
+    [[ $archive == -* ]] && archive="./$archive"
+
+    case $archive in
+        *.tar.bz2|*.tbz2) tar xjf "$archive" ;;
+        *.tar.gz|*.tgz)   tar xzf "$archive" ;;
+        *.tar.xz)         tar xJf "$archive" ;;
+        *.tar)            tar xf "$archive"  ;;
+        *.bz2)            bunzip2 "$archive" ;;
+        *.gz|*.Z)         gunzip "$archive"  ;;
+        *.zip)            unzip "$archive"   ;;
+        *.rar|*.7z)       unar "$archive"    ;;
+        *)
+            print -u2 -- "extract: '$1' has an unsupported format"
+            return 1
+            ;;
+    esac
+}
+
 # ----------------------------------------------------------------------------
 # ALIASES - SYSTEM
 # ----------------------------------------------------------------------------
@@ -178,9 +204,13 @@ if command -v eza &>/dev/null; then
     alias lt='eza --tree --level=2 --icons=auto'
     alias ld='eza -lD --icons=auto'
 else
-    alias ls='ls -G'
-    alias l='ls -lhG'
-    alias ll='ls -lhaG'
+    if [[ $OSTYPE == darwin* ]]; then
+        alias ls='ls -G'
+    else
+        alias ls='ls --color=auto'
+    fi
+    alias l='ls -lh'
+    alias ll='ls -lha'
     alias ld='ls -lhd */'
 fi
 
@@ -218,6 +248,7 @@ cheatsheet() {
 │                                                                             │
 │  fcd [path]               Fuzzy directory navigation with preview           │
 │  ff <pattern>             Find in files and open in editor                  │
+│  extract <file>           Extract tar, gz, bz2, xz, zip, rar or 7z          │
 │  cheatsheet               Display this cheatsheet                           │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
@@ -280,3 +311,12 @@ cheatsheet() {
 
 EOF
 }
+
+# ----------------------------------------------------------------------------
+# LOCAL OVERRIDES
+# ----------------------------------------------------------------------------
+
+# Machine-specific settings that do not belong in the repository
+if [[ -r ~/.zshrc.local ]]; then
+    source ~/.zshrc.local
+fi
