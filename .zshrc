@@ -222,9 +222,9 @@ alias mkdir='mkdir -p'
 if [[ $OSTYPE == darwin* ]]; then
     alias up='brew update && brew upgrade'
 elif (( EUID == 0 )); then
-    alias up='apt update && apt upgrade'
+    alias up='apt update && apt full-upgrade'
 else
-    alias up='sudo apt update && sudo apt upgrade'
+    alias up='sudo apt update && sudo apt full-upgrade'
 fi
 
 # ----------------------------------------------------------------------------

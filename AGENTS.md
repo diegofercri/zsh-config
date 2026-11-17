@@ -31,7 +31,7 @@ Configuración personal de zsh con un instalador único. Sistemas soportados:
 - Prompt con starship. Completado con fzf-tab.
 - Alias de navegación, de `ls` (con eza si está instalado) y de git.
 - Funciones: `fcd`, `ff`, `extract`, `update` y `cheatsheet`.
-- El alias `up` actualiza los paquetes del sistema: `brew update && brew upgrade` en macOS y `apt update && apt upgrade` en Debian/Proxmox.
+- El alias `up` actualiza los paquetes del sistema: `brew update && brew upgrade` en macOS y `apt update && apt full-upgrade` en Debian/Proxmox. Se usa `full-upgrade` porque es lo que Proxmox recomienda; no cambia de versión mayor.
 - `update` actualiza solo lo que `apt` y `brew` no cubren: este repositorio (`git pull`), zinit, sus plugins y, donde se instaló con su script, starship. No debe llamar a `apt` ni a `brew`.
 - En macOS, además: Homebrew, el agente SSH de Bitwarden y el Ruby de Homebrew. En servidores no se toca `SSH_AUTH_SOCK`, para no romper el reenvío de agente.
 
