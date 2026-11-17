@@ -1,24 +1,36 @@
 # Dracula theme: palette and module colors from the official Dracula theme for
-# Starship. Symbols and wording stay as Starship's defaults.
+# Starship.
 palette = "dracula"
 
-[directory]
-style = "bold green"
-
-[git_branch]
-style = "bold pink"
+# One line of parts joined by " - ": user - host - ssh - directory - branch.
+# Every part after the user brings its own leading separator, so a missing
+# part leaves no gap.
+format = "$username$hostname$directory$git_branch$git_status $all"
 
 # root keeps Starship's default red, as a warning.
 [username]
+show_always = true
 style_user = "bold cyan"
+format = "[$user]($style)"
 
-# Starship only shows the symbol in SSH sessions, so plain text says it better
-# than the default globe emoji. It gets its own color to stand apart from the
-# host name.
+# The ssh label only appears in SSH sessions. It carries its own separator
+# because Starship does not hide a "(...)" group around $ssh_symbol.
 [hostname]
-ssh_symbol = "ssh "
-format = "[$ssh_symbol](bold orange)[$hostname]($style) in "
+ssh_only = false
+ssh_symbol = " - [ssh](bold orange)"
 style = "bold purple"
+format = " - [$hostname]($style)$ssh_symbol"
+
+[directory]
+style = "bold green"
+format = " - [$path]($style)[$read_only]($read_only_style)"
+
+[git_branch]
+style = "bold pink"
+format = " - [$symbol$branch(:$remote_branch)]($style)"
+
+[git_status]
+format = '( [\[$all_status$ahead_behind\]]($style))'
 
 [palettes.dracula]
 background = "#282a36"
