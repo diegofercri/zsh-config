@@ -205,25 +205,36 @@ extract() {
 update() {
     local config_dir=${${:-$HOME/.zshrc}:A:h}
 
-    print -- "[*] Updating zsh config..."
+    _update_step "Updating zsh config"
     git -C "$config_dir" pull --ff-only || {
         print -u2 -- "update: could not update $config_dir"
         return 1
     }
 
-    print -- "[*] Updating zinit and plugins..."
-    # -q keeps zinit from opening its changelog in a pager
+    # -q keeps zinit from opening its changelog in a pager, so each quiet
+    # step reports its own result
+    _update_step "Updating zinit"
     zinit self-update -q || return 1
+    print -- "Done."
+
+    _update_step "Updating plugins"
     zinit update -q --all --parallel || return 1
     zinit cclear
+    print -- "Done."
 
     # Only when starship came from its own installer instead of apt or brew
     if [[ $(command -v starship) == /usr/local/bin/starship ]]; then
-        print -- "[*] Updating starship..."
+        _update_step "Updating starship"
         curl -fsSL https://starship.rs/install.sh | sh -s -- --yes || return 1
     fi
 
+    _update_step "Done, reloading the shell"
     exec zsh
+}
+
+# Step title for update, with an empty line above and below
+_update_step() {
+    print -P -- "\n%B%F{blue}==>%f $1%b\n"
 }
 
 # ----------------------------------------------------------------------------
