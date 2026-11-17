@@ -218,6 +218,15 @@ alias .3='cd ../../..'
 alias .4='cd ../../../..'
 alias mkdir='mkdir -p'
 
+# System packages (the update function covers what these leave out)
+if [[ $OSTYPE == darwin* ]]; then
+    alias up='brew update && brew upgrade'
+elif (( EUID == 0 )); then
+    alias up='apt update && apt upgrade'
+else
+    alias up='sudo apt update && sudo apt upgrade'
+fi
+
 # ----------------------------------------------------------------------------
 # ALIASES - FILE LISTING
 # ----------------------------------------------------------------------------
@@ -321,6 +330,7 @@ cheatsheet() {
 ┌─ SHELL MANAGEMENT ──────────────────────────────────────────────────────────┐
 │                                                                             │
 │  c                        Clear screen                                      │
+│  up                       Upgrade system packages (brew or apt)             │
 │  update                   Update this config, zinit and its plugins         │
 │  reload                   Reload zsh configuration                          │
 │                                                                             │
