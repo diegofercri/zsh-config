@@ -144,16 +144,17 @@ fcd() {
 
 # Find in files and edit
 ff() {
-    local file line
-    read -r file line < <(rg --line-number --no-heading --color=always --smart-case "${*:-}" |
+    # fzf must run in $(...): inside <(...) zsh puts it in a background
+    # process group and the terminal stops it
+    local selected file line
+    selected=$(rg --line-number --no-heading --color=always --smart-case -- "${*:-}" |
         fzf --ansi --delimiter : \
             --preview 'bat --style=numbers --color=always --highlight-line {2} {1}' \
-            --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' |
-        awk -F: '{print $1, $2}')
-    if [[ -n "$file" ]]; then
-        # The line goes first: nano and pico ignore it after the file name
-        ${EDITOR:-nano} "+$line" "$file"
-    fi
+            --preview-window 'up,60%,border-bottom,+{2}+3/3,~3') || return
+    file=${selected%%:*}
+    line=${${selected#*:}%%:*}
+    # The line goes first: nano and pico ignore it after the file name
+    ${EDITOR:-nano} "+$line" "$file"
 }
 
 # Universal file extractor
