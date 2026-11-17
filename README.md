@@ -20,4 +20,4 @@ En los servidores no se instala ninguna fuente: la que se ve por SSH es la del t
 
 - `cheatsheet` muestra todos los alias y funciones.
 - Los ajustes propios de una máquina van en `~/.zshrc.local`.
-- Para actualizar, vuelve a ejecutar el comando de instalación.
+- `update` actualiza esta configuración y sus plugins. Los paquetes del sistema se siguen actualizando con `brew` o `apt`.

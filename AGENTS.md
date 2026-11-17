@@ -30,7 +30,8 @@ Configuración personal de zsh con un instalador único. Sistemas soportados:
 - Instala zinit en el primer arranque si falta y carga los plugins con él.
 - Prompt con starship. Completado con fzf-tab.
 - Alias de navegación, de `ls` (con eza si está instalado) y de git.
-- Funciones: `fcd`, `ff`, `extract` y `cheatsheet`.
+- Funciones: `fcd`, `ff`, `extract`, `update` y `cheatsheet`.
+- `update` actualiza solo lo que `apt` y `brew` no cubren: este repositorio (`git pull`), zinit, sus plugins y, donde se instaló con su script, starship. No debe llamar a `apt` ni a `brew`.
 - En macOS, además: Homebrew, el agente SSH de Bitwarden y el Ruby de Homebrew. En servidores no se toca `SSH_AUTH_SOCK`, para no romper el reenvío de agente.
 
 ## Qué hace `install.sh`
