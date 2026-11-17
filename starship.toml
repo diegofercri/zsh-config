@@ -1,4 +1,6 @@
 # Starship only shows this symbol in SSH sessions, so plain text says it
-# better than the default globe emoji.
+# better than the default globe emoji. It gets its own color to stand apart
+# from the host name.
 [hostname]
 ssh_symbol = "ssh "
+format = "[$ssh_symbol](bold blue)[$hostname]($style) in "
