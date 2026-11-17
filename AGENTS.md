@@ -14,6 +14,7 @@ A personal zsh configuration with a single installer. Supported systems:
 - `.zshrc`: the whole configuration. `~/.zshrc` is a symlink to it.
 - `starship.toml`: prompt settings. `.zshrc` points `STARSHIP_CONFIG` at it, so it needs no symlink and `~/.config/starship.toml` is ignored.
 - `install.sh`: installs the dependencies and creates the symlink. It covers macOS and Debian/Proxmox.
+- `uninstall.sh`: undoes what `install.sh` set up.
 - `README.md`: instructions for a person. Keep it short.
 - `AGENTS.md`: this file.
 
@@ -48,6 +49,18 @@ A personal zsh configuration with a single installer. Supported systems:
 4. On Linux, changes the login shell to zsh.
 
 It must be safe to run more than once. `main` comes first and reads as the list of steps; each step is a function below it. `main` is called on the last line so that `curl | bash` reads the whole script before running any of it.
+
+## What `uninstall.sh` does
+
+It refuses to run unless `~/.zshrc` is a link into a clone of this repository, so it never touches another configuration. Then it:
+
+1. Removes the `~/.zshrc` link and restores the newest `~/.zshrc.bak-<date>`, if there is one.
+2. Deletes zinit with its plugins and the completion cache.
+3. Removes the `fd` and `bat` links from `~/.local/bin`.
+4. On Linux, changes the login shell back to bash.
+5. Deletes the clone only when it is the downloaded one in `~/.config/zsh-config`; a clone made by hand stays.
+
+It never removes packages, the font, `~/.zshrc.local` or the shell history: it cannot know which packages were there before. It prints the commands to remove them by hand. Anything `install.sh` starts to create must be undone here.
 
 ## Debian specifics
 

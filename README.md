@@ -10,6 +10,14 @@ curl -fsSL https://raw.githubusercontent.com/diegofercri/zsh-config/main/install
 
 macOS needs [Homebrew](https://brew.sh) installed first. An existing `~/.zshrc` is saved as `~/.zshrc.bak-<date>`.
 
+## Uninstall
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/diegofercri/zsh-config/main/uninstall.sh | bash
+```
+
+It restores your previous `~/.zshrc` and, on servers, bash as the login shell. The installed packages stay.
+
 ## Font
 
 On macOS the installer adds JetBrains Mono with icons. Select it by hand in each terminal and editor: it is called `JetBrainsMono Nerd Font`.
