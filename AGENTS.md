@@ -31,7 +31,7 @@ A personal zsh configuration with a single installer. Supported systems:
 - Installs zinit on the first start if it is missing, and loads the plugins with it.
 - Starship prompt. Completion with fzf-tab.
 - Aliases for navigation, `ls` (with eza when installed) and git.
-- There is no theme. Colors are terminal color names (`red`, `cyan`, ...), never hex values, so the theme of the terminal the user connects from decides how everything looks. `starship.toml` only sets the prompt layout.
+- There is no theme. Colors are terminal color names (`red`, `cyan`, ...), never hex values, so the theme of the terminal the user connects from decides how everything looks. `starship.toml` only sets the prompt layout, and `.zshrc` limits `fzf`, fzf-tab and `bat` to the terminal's colors (`--color=16`, `BAT_THEME=ansi`).
 - The editor is `nano`: macOS ships it and the installer adds it on Debian/Proxmox.
 - Functions: `fcd`, `ff`, `extract`, `update` and `cheatsheet`.
 - The `up` alias upgrades the system packages: `brew update && brew upgrade` on macOS and `apt update && apt full-upgrade` on Debian/Proxmox. It uses `full-upgrade` because Proxmox recommends it; it does not move to a new major release.

@@ -140,8 +140,13 @@ zstyle ':fzf-tab:complete:*' fzf-preview 'bat --color=always --line-range :50 {}
 
 if command -v fzf &>/dev/null; then
     export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
-    export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --preview-window=right:60%'
+    export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --preview-window=right:60% --color=16'
 fi
+
+# No theme here: fzf, fzf-tab and bat are limited to the terminal's own colors,
+# so the theme of the terminal decides how everything looks
+zstyle ':fzf-tab:*' fzf-flags --color=16
+export BAT_THEME='ansi'
 
 # ----------------------------------------------------------------------------
 # FUNCTIONS
