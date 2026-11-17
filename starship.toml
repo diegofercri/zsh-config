@@ -1,0 +1,4 @@
+# Starship only shows this symbol in SSH sessions, so plain text says it
+# better than the default globe emoji.
+[hostname]
+ssh_symbol = "ssh "

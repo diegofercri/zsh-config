@@ -74,6 +74,8 @@ zinit snippet OMZL::directories.zsh
 # PROMPT
 # ----------------------------------------------------------------------------
 
+# Starship reads its settings from this repository
+export STARSHIP_CONFIG="${${(%):-%x}:A:h}/starship.toml"
 eval "$(starship init zsh)"
 
 # ----------------------------------------------------------------------------

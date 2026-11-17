@@ -12,6 +12,7 @@ A personal zsh configuration with a single installer. Supported systems:
 ## Files
 
 - `.zshrc`: the whole configuration. `~/.zshrc` is a symlink to it.
+- `starship.toml`: prompt settings. `.zshrc` points `STARSHIP_CONFIG` at it, so it needs no symlink and `~/.config/starship.toml` is ignored.
 - `install.sh`: installs the dependencies and creates the symlink. It covers macOS and Debian/Proxmox.
 - `README.md`: instructions for a person. Keep it short.
 - `AGENTS.md`: this file.
