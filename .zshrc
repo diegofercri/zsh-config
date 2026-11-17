@@ -76,6 +76,10 @@ zinit snippet OMZL::directories.zsh
 
 # Starship reads its settings from this repository
 export STARSHIP_CONFIG="${${(%):-%x}:A:h}/starship.toml"
+# The prompt leaves out the host name on a local macOS session
+if [[ $OSTYPE == darwin* && -z $SSH_CONNECTION ]]; then
+    export PROMPT_HIDE_HOST=1
+fi
 eval "$(starship init zsh)"
 
 # ----------------------------------------------------------------------------

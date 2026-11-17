@@ -13,10 +13,13 @@ show_always = true
 style_user = "bold cyan"
 format = "[$user]($style)"
 
-# The ssh label only appears in SSH sessions. It carries its own separator
-# because Starship does not hide a "(...)" group around $ssh_symbol.
+# The host is hidden in a local macOS session, where .zshrc sets
+# PROMPT_HIDE_HOST. The ssh label only appears in SSH sessions; it carries its
+# own separator because Starship does not hide a "(...)" group around
+# $ssh_symbol.
 [hostname]
 ssh_only = false
+detect_env_vars = ["!PROMPT_HIDE_HOST"]
 ssh_symbol = " - [ssh](bold orange)"
 style = "bold purple"
 format = " - [$hostname]($style)$ssh_symbol"
