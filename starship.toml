@@ -1,13 +1,24 @@
-# Dracula theme. The palette redefines the color names that Starship's default
-# styles already use, so the whole prompt follows it without restyling modules.
+# Dracula theme: palette and module colors from the official Dracula theme for
+# Starship. Symbols and wording stay as Starship's defaults.
 palette = "dracula"
 
-# Starship only shows this symbol in SSH sessions, so plain text says it
-# better than the default globe emoji. It gets its own color to stand apart
-# from the host name.
+[directory]
+style = "bold green"
+
+[git_branch]
+style = "bold pink"
+
+# root keeps Starship's default red, as a warning.
+[username]
+style_user = "bold cyan"
+
+# Starship only shows the symbol in SSH sessions, so plain text says it better
+# than the default globe emoji. It gets its own color to stand apart from the
+# host name.
 [hostname]
 ssh_symbol = "ssh "
 format = "[$ssh_symbol](bold orange)[$hostname]($style) in "
+style = "bold purple"
 
 [palettes.dracula]
 background = "#282a36"
