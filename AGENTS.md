@@ -30,6 +30,7 @@ A personal zsh configuration with a single installer. Supported systems:
 - Installs zinit on the first start if it is missing, and loads the plugins with it.
 - Starship prompt. Completion with fzf-tab.
 - Aliases for navigation, `ls` (with eza when installed) and git.
+- The editor is `nano`: macOS ships it and the installer adds it on Debian/Proxmox.
 - Functions: `fcd`, `ff`, `extract`, `update` and `cheatsheet`.
 - The `up` alias upgrades the system packages: `brew update && brew upgrade` on macOS and `apt update && apt full-upgrade` on Debian/Proxmox. It uses `full-upgrade` because Proxmox recommends it; it does not move to a new major release.
 - `update` refreshes only what `apt` and `brew` leave out: this repository (`git pull`), zinit, its plugins and, where it was installed by its own script, starship. It must not call `apt` or `brew`.
@@ -44,7 +45,7 @@ A personal zsh configuration with a single installer. Supported systems:
 3. Links `~/.zshrc`. A different existing file is saved as `~/.zshrc.bak-<date>`.
 4. On Linux, changes the login shell to zsh.
 
-It must be safe to run more than once. All the code sits inside `main` so that `curl | bash` reads the whole script before running any of it.
+It must be safe to run more than once. `main` comes first and reads as the list of steps; each step is a function below it. `main` is called on the last line so that `curl | bash` reads the whole script before running any of it.
 
 ## Debian specifics
 

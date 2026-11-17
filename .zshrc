@@ -40,8 +40,8 @@ fi
 export PATH="$HOME/.local/bin:$PATH"
 
 # Default applications
-#export EDITOR='nvim'
-#export VISUAL='nvim'
+export EDITOR='nano'
+export VISUAL='nano'
 export PAGER='less'
 
 # History
@@ -151,7 +151,8 @@ ff() {
             --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' |
         awk -F: '{print $1, $2}')
     if [[ -n "$file" ]]; then
-        ${EDITOR:-vim} "$file" +$line
+        # The line goes first: nano and pico ignore it after the file name
+        ${EDITOR:-nano} "+$line" "$file"
     fi
 }
 
