@@ -1,63 +1,63 @@
 # AGENTS.md
 
-Guía para agentes de IA que trabajen en este repositorio.
+Guide for AI agents working in this repository.
 
-## Qué es
+## What it is
 
-Configuración personal de zsh con un instalador único. Sistemas soportados:
+A personal zsh configuration with a single installer. Supported systems:
 
-- macOS con Homebrew (Apple Silicon).
-- Debian y Proxmox como servidores, sin interfaz gráfica. En Proxmox se trabaja como root y no hay `sudo`.
+- macOS with Homebrew (Apple Silicon).
+- Debian and Proxmox servers, with no graphical interface. Proxmox is used as root and has no `sudo`.
 
-## Archivos
+## Files
 
-- `.zshrc`: toda la configuración. Se enlaza desde `~/.zshrc`.
-- `install.sh`: instala las dependencias y crea el enlace. Sirve para macOS y para Debian/Proxmox.
-- `README.md`: instrucciones para una persona. Debe seguir siendo corto.
-- `AGENTS.md`: este archivo.
+- `.zshrc`: the whole configuration. `~/.zshrc` is a symlink to it.
+- `install.sh`: installs the dependencies and creates the symlink. It covers macOS and Debian/Proxmox.
+- `README.md`: instructions for a person. Keep it short.
+- `AGENTS.md`: this file.
 
-## Reglas
+## Rules
 
-- Mantenerlo mínimo. Un solo `.zshrc` para todos los sistemas: sin módulos, sin perfiles y sin archivos por sistema.
-- Lo que solo vale para un sistema va detrás de una comprobación, por ejemplo `[[ $OSTYPE == darwin* ]]` o `command -v eza`.
-- Lo que solo vale para una máquina (rutas de SDK, alias personales) no va en el repositorio. Va en `~/.zshrc.local`, que `.zshrc` carga al final si existe.
-- Al añadir, cambiar o quitar un alias o una función, actualizar también la función `cheatsheet` de `.zshrc`.
-- No añadir dependencias nuevas si una ya instalada sirve. `extract` usa `unar` para `.rar` y `.7z`, y `gunzip` para `.Z`, por ese motivo.
-- Comentarios del código en inglés. README y este archivo en español.
+- Keep it minimal. One `.zshrc` for every system: no modules, no profiles and no per-system files.
+- Anything that applies to one system only goes behind a check, such as `[[ $OSTYPE == darwin* ]]` or `command -v eza`.
+- Anything that applies to one machine only (SDK paths, personal aliases) stays out of the repository. It goes in `~/.zshrc.local`, which `.zshrc` loads last when it exists.
+- When you add, change or remove an alias or a function, update the `cheatsheet` function in `.zshrc` as well.
+- Do not add a dependency when an installed one already does the job. This is why `extract` uses `unar` for `.rar` and `.7z`, and `gunzip` for `.Z`.
+- Everything is written in English: code comments, script messages, `README.md` and this file.
 
-## Qué hace `.zshrc`
+## What `.zshrc` does
 
-- Instala zinit en el primer arranque si falta y carga los plugins con él.
-- Prompt con starship. Completado con fzf-tab.
-- Alias de navegación, de `ls` (con eza si está instalado) y de git.
-- Funciones: `fcd`, `ff`, `extract`, `update` y `cheatsheet`.
-- El alias `up` actualiza los paquetes del sistema: `brew update && brew upgrade` en macOS y `apt update && apt full-upgrade` en Debian/Proxmox. Se usa `full-upgrade` porque es lo que Proxmox recomienda; no cambia de versión mayor.
-- `update` actualiza solo lo que `apt` y `brew` no cubren: este repositorio (`git pull`), zinit, sus plugins y, donde se instaló con su script, starship. No debe llamar a `apt` ni a `brew`.
-- En macOS, además: Homebrew, el agente SSH de Bitwarden y el Ruby de Homebrew. En servidores no se toca `SSH_AUTH_SOCK`, para no romper el reenvío de agente.
+- Installs zinit on the first start if it is missing, and loads the plugins with it.
+- Starship prompt. Completion with fzf-tab.
+- Aliases for navigation, `ls` (with eza when installed) and git.
+- Functions: `fcd`, `ff`, `extract`, `update` and `cheatsheet`.
+- The `up` alias upgrades the system packages: `brew update && brew upgrade` on macOS and `apt update && apt full-upgrade` on Debian/Proxmox. It uses `full-upgrade` because Proxmox recommends it; it does not move to a new major release.
+- `update` refreshes only what `apt` and `brew` leave out: this repository (`git pull`), zinit, its plugins and, where it was installed by its own script, starship. It must not call `apt` or `brew`.
+- On macOS only: Homebrew, the Bitwarden SSH agent and the Homebrew Ruby. Servers keep their `SSH_AUTH_SOCK`, so agent forwarding still works.
 
-## Qué hace `install.sh`
+## What `install.sh` does
 
-1. Instala las dependencias.
-   - macOS: paquetes con `brew` y la fuente `font-jetbrains-mono-nerd-font`.
-   - Debian/Proxmox: paquetes con `apt-get`, usando `sudo` solo si no es root. No se instala ninguna fuente.
-2. Localiza el repositorio: usa el clon desde el que se ejecuta o, si llega por `curl | bash`, clona o actualiza `~/.config/zsh-config`.
-3. Enlaza `~/.zshrc`. Si ya había uno distinto, lo guarda como `~/.zshrc.bak-<fecha>`.
-4. En Linux, cambia la shell de inicio a zsh.
+1. Installs the dependencies.
+   - macOS: packages with `brew`, plus the `font-jetbrains-mono-nerd-font` font.
+   - Debian/Proxmox: packages with `apt-get`, using `sudo` only when not root. No font is installed.
+2. Finds the repository: it uses the clone it runs from or, when run through `curl | bash`, clones or updates `~/.config/zsh-config`.
+3. Links `~/.zshrc`. A different existing file is saved as `~/.zshrc.bak-<date>`.
+4. On Linux, changes the login shell to zsh.
 
-Debe poder ejecutarse varias veces sin efectos nuevos. Todo el código está dentro de `main` para que `curl | bash` lea el script completo antes de ejecutar nada.
+It must be safe to run more than once. All the code sits inside `main` so that `curl | bash` reads the whole script before running any of it.
 
-## Particularidades de Debian
+## Debian specifics
 
-- `fd` se llama `fdfind` y `bat` se llama `batcat`. El instalador crea enlaces en `~/.local/bin`, que `.zshrc` añade al `PATH`.
-- `eza` y `starship` solo están en apt desde Debian 13 / Proxmox 9. Si falta `eza`, `.zshrc` usa `ls`. Si falta `starship`, el instalador usa su script oficial.
-- `apt-get update` puede fallar en Proxmox sin suscripción por el repositorio enterprise. El instalador continúa igualmente.
+- `fd` is named `fdfind` and `bat` is named `batcat`. The installer creates links in `~/.local/bin`, which `.zshrc` adds to `PATH`.
+- `eza` and `starship` are only in apt from Debian 13 / Proxmox 9. Without `eza`, `.zshrc` falls back to `ls`. Without `starship`, the installer uses its official script.
+- `apt-get update` can fail on Proxmox without a subscription because of the enterprise repository. The installer carries on anyway.
 
-## Verificar un cambio
+## Checking a change
 
 ```sh
 zsh -n .zshrc
 bash -n install.sh
-zsh -ic 'type extract fcd ff cheatsheet'
+zsh -ic 'type extract update fcd ff cheatsheet'
 ```
 
-La parte de Linux hay que probarla en un servidor o contenedor Debian.
+The Linux part has to be tested on a Debian server or container.

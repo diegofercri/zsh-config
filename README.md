@@ -1,24 +1,22 @@
 # zsh-config
 
-Mi configuración de zsh para macOS y servidores Debian/Proxmox.
+My zsh configuration for macOS and Debian/Proxmox servers.
 
-## Instalación
+## Install
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/diegofercri/zsh-config/main/install.sh | bash
 ```
 
-En macOS hace falta tener [Homebrew](https://brew.sh) instalado. Si ya existe un `~/.zshrc`, se guarda como `~/.zshrc.bak-<fecha>`.
+macOS needs [Homebrew](https://brew.sh) installed first. An existing `~/.zshrc` is saved as `~/.zshrc.bak-<date>`.
 
-## Fuente
+## Font
 
-En macOS se instala JetBrains Mono con iconos. Hay que seleccionarla a mano en cada terminal y editor: se llama `JetBrainsMono Nerd Font`.
+On macOS the installer adds JetBrains Mono with icons. Select it by hand in each terminal and editor: it is called `JetBrainsMono Nerd Font`.
 
-En los servidores no se instala ninguna fuente: la que se ve por SSH es la del terminal desde el que te conectas.
+Servers get no font: over SSH you see the font of the terminal you connect from.
 
-## Uso
+## Usage
 
-- `cheatsheet` muestra todos los alias y funciones.
-- Los ajustes propios de una máquina van en `~/.zshrc.local`.
-- `update` actualiza esta configuración y sus plugins.
-- `up` actualiza los paquetes del sistema con `brew` o `apt`.
+- `cheatsheet` lists every alias and function.
+- Machine-specific settings go in `~/.zshrc.local`.
