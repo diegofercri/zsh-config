@@ -53,6 +53,7 @@ It must be safe to run more than once. `main` comes first and reads as the list 
 
 - `fd` is named `fdfind` and `bat` is named `batcat`. The installer creates links in `~/.local/bin`, which `.zshrc` adds to `PATH`.
 - `eza` and `starship` are only in apt from Debian 13 / Proxmox 9. Without `eza`, `.zshrc` falls back to `ls`. Without `starship`, the installer uses its official script.
+- A session can arrive without a UTF-8 locale: the server may have none as default and some SSH clients (Termius) do not send theirs. `.zshrc` then sets `LC_ALL=C.UTF-8`; without it zsh shows non-ASCII input as `<ffffffe2>` and repeats characters in pasted text.
 - `apt-get update` can fail on Proxmox without a subscription because of the enterprise repository. The installer carries on anyway.
 
 ## Checking a change

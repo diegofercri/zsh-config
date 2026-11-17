@@ -30,6 +30,13 @@ zinit light-mode for \
 # ENVIRONMENT VARIABLES
 # ----------------------------------------------------------------------------
 
+# Without a UTF-8 locale the line editor shows non-ASCII input as <ffffffe2>
+# and repeats characters in pasted text. Some servers and SSH clients do not
+# provide one, so fall back to C.UTF-8, which Debian always has.
+if [[ $OSTYPE == linux* && $(locale charmap 2>/dev/null) != UTF-8 ]]; then
+    export LC_ALL=C.UTF-8
+fi
+
 # macOS only: SSH agent (Bitwarden desktop) and Homebrew Ruby
 if [[ $OSTYPE == darwin* ]]; then
     export SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock"
